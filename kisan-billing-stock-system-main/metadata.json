@@ -1,0 +1,6 @@
+{
+  "name": "Kisan Billing & Stock System",
+  "description": "Comprehensive billing, grain stock inventory, farmer ledger, and sales management system for agricultural mandis and grain merchants.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
