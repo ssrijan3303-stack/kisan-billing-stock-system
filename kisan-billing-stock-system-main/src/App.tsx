@@ -20,6 +20,7 @@ import {
   StaffUser,
   BusinessProfile
 } from './types';
+import { translations, Language } from './translations';
 import { Sidebar, NavTab } from './components/Sidebar';
 import { TopNav } from './components/TopNav';
 import { DashboardView } from './components/DashboardView';
@@ -48,6 +49,14 @@ export default function App() {
   // Navigation
   const [currentTab, setCurrentTab] = useState<NavTab>('dashboard');
   const [sidebarOpen, setSidebarOpen] = useState(false);
+
+  // Language State (English / Hindi)
+  const [lang, setLang] = useState<Language>('en');
+  const t = translations[lang];
+
+  const toggleLanguage = () => {
+    setLang((prev) => (prev === 'en' ? 'hi' : 'en'));
+  };
 
   // Core State with localStorage fallback
   const [transactions, setTransactions] = useState<Transaction[]>(() => {
@@ -340,6 +349,8 @@ export default function App() {
           onSelectTab={setCurrentTab}
           isOpen={sidebarOpen}
           onCloseMobile={() => setSidebarOpen(false)}
+          lang={lang}
+          t={t}
         />
 
         {/* Right Main Content */}
@@ -355,6 +366,9 @@ export default function App() {
               setSelectedFarmerForLedger(farmer);
               setCurrentTab('farmers');
             }}
+            lang={lang}
+            toggleLanguage={toggleLanguage}
+            t={t}
           />
 
           {/* Main Canvas */}
@@ -372,6 +386,8 @@ export default function App() {
                 onOpenStockEntry={() => setIsStockEntryOpen(true)}
                 onNavigateTab={(tab) => setCurrentTab(tab)}
                 onViewInvoice={(tx) => setActiveInvoicePreview(tx)}
+                lang={lang}
+                t={t}
               />
             )}
 
@@ -383,6 +399,8 @@ export default function App() {
                 businessProfile={businessProfile}
                 onAddTransaction={handleAddTransaction}
                 onViewInvoice={(tx) => setActiveInvoicePreview(tx)}
+                lang={lang}
+                t={t}
               />
             )}
 
@@ -392,6 +410,8 @@ export default function App() {
                 onOpenAddBill={() => setIsAddBillOpen(true)}
                 onViewInvoice={(tx) => setActiveInvoicePreview(tx)}
                 onUpdatePaymentStatus={handleTogglePaymentStatus}
+                lang={lang}
+                t={t}
               />
             )}
 
@@ -401,6 +421,8 @@ export default function App() {
                 onOpenAddPurchase={() => setIsAddPurchaseOpen(true)}
                 onViewInvoice={(tx) => setActiveInvoicePreview(tx)}
                 onUpdatePaymentStatus={handleTogglePaymentStatus}
+                lang={lang}
+                t={t}
               />
             )}
 
@@ -411,6 +433,8 @@ export default function App() {
                 onOpenAddFarmer={() => setIsAddFarmerOpen(true)}
                 onSettleFarmerDue={handleSettleFarmerDue}
                 selectedFarmerFromSearch={selectedFarmerForLedger}
+                lang={lang}
+                t={t}
               />
             )}
 
@@ -419,6 +443,8 @@ export default function App() {
                 products={products}
                 onUpdateRate={handleUpdateProductRate}
                 onAddNewProduct={handleAddNewProduct}
+                lang={lang}
+                t={t}
               />
             )}
 
@@ -427,6 +453,8 @@ export default function App() {
                 products={products}
                 transactions={transactions}
                 onOpenStockEntry={() => setIsStockEntryOpen(true)}
+                lang={lang}
+                t={t}
               />
             )}
 
@@ -438,6 +466,8 @@ export default function App() {
                 expenses={expenses}
                 farmers={farmers}
                 businessProfile={businessProfile}
+                lang={lang}
+                t={t}
               />
             )}
 
@@ -445,6 +475,8 @@ export default function App() {
               <ExpensesView
                 expenses={expenses}
                 onOpenAddExpense={() => setIsAddExpenseOpen(true)}
+                lang={lang}
+                t={t}
               />
             )}
 
@@ -453,6 +485,8 @@ export default function App() {
                 users={staffUsers}
                 onAddUser={handleAddStaffUser}
                 onToggleUserStatus={handleToggleUserStatus}
+                lang={lang}
+                t={t}
               />
             )}
 
@@ -463,6 +497,8 @@ export default function App() {
                 onResetDemoData={handleResetDemoData}
                 onExportAllData={handleExportAllData}
                 onImportAllData={handleImportAllData}
+                lang={lang}
+                t={t}
               />
             )}
           </main>

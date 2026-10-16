@@ -17,6 +17,7 @@ import {
 import { Transaction, Product, Expense, Farmer } from '../types';
 import { StockDonutChart, SalesVsPurchaseChart } from './Charts';
 import { NavTab } from './Sidebar';
+import { Language } from '../translations';
 
 interface DashboardViewProps {
   transactions: Transaction[];
@@ -30,6 +31,8 @@ interface DashboardViewProps {
   onOpenStockEntry: () => void;
   onNavigateTab: (tab: NavTab) => void;
   onViewInvoice: (tx: Transaction) => void;
+  lang: Language;
+  t: any;
 }
 
 export const DashboardView: React.FC<DashboardViewProps> = ({
@@ -43,7 +46,9 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
   onOpenAddExpense,
   onOpenStockEntry,
   onNavigateTab,
-  onViewInvoice
+  onViewInvoice,
+  lang,
+  t
 }) => {
   // Dynamic metrics calculation
   const wheatProd = products.find((p) => p.name.toLowerCase().includes('wheat')) || products[0];
@@ -74,7 +79,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         {/* Card 1: Total Stock (All) */}
         <div className="bg-white rounded-xl p-4 shadow-xs border border-slate-100 flex items-start justify-between">
           <div className="space-y-1">
-            <span className="text-xs text-slate-500 font-medium">Total Stock (All)</span>
+            <span className="text-xs text-slate-500 font-medium">{t.totalStock}</span>
             <div className="text-xl font-bold text-slate-800">
               {totalStockKg.toLocaleString('en-IN')} kg
             </div>
@@ -91,7 +96,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         {/* Card 2: Total Purchase */}
         <div className="bg-white rounded-xl p-4 shadow-xs border border-slate-100 flex items-start justify-between">
           <div className="space-y-1">
-            <span className="text-xs text-slate-500 font-medium">Total Purchase</span>
+            <span className="text-xs text-slate-500 font-medium">{t.totalPurchase}</span>
             <div className="text-xl font-bold text-slate-800">
               ₹ {totalPurchase.toLocaleString('en-IN')}
             </div>
@@ -107,7 +112,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         {/* Card 3: Total Sales */}
         <div className="bg-white rounded-xl p-4 shadow-xs border border-slate-100 flex items-start justify-between">
           <div className="space-y-1">
-            <span className="text-xs text-slate-500 font-medium">Total Sales</span>
+            <span className="text-xs text-slate-500 font-medium">{t.totalSales}</span>
             <div className="text-xl font-bold text-slate-800">
               ₹ {totalSales.toLocaleString('en-IN')}
             </div>
@@ -123,7 +128,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         {/* Card 4: Profit / Loss */}
         <div className="bg-white rounded-xl p-4 shadow-xs border border-slate-100 flex items-start justify-between">
           <div className="space-y-1">
-            <span className="text-xs text-slate-500 font-medium">Profit / Loss</span>
+            <span className="text-xs text-slate-500 font-medium">{t.netProfit}</span>
             <div className="text-xl font-bold text-[#10b981]">
               ₹ {netProfit.toLocaleString('en-IN')}
             </div>
@@ -139,7 +144,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         {/* Card 5: Pending Payments */}
         <div className="bg-white rounded-xl p-4 shadow-xs border border-slate-100 flex items-start justify-between">
           <div className="space-y-1">
-            <span className="text-xs text-slate-500 font-medium">Pending Payments</span>
+            <span className="text-xs text-slate-500 font-medium">{t.pendingPayments}</span>
             <div className="text-xl font-bold text-slate-800">
               ₹ {pendingPaymentsAmount.toLocaleString('en-IN')}
             </div>
@@ -255,7 +260,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
           {/* Quick Actions Card matching screenshot */}
           <div className="bg-white rounded-xl p-4 shadow-xs border border-slate-100">
-            <h3 className="text-xs font-bold text-slate-700 mb-3">Quick Actions</h3>
+            <h3 className="text-xs font-bold text-slate-700 mb-3">{t.quickActions}</h3>
             <div className="grid grid-cols-2 gap-2 text-xs">
               {/* + Add Bill */}
               <button
@@ -332,7 +337,7 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         {/* Left: Recent Transactions Table (col-span-8) */}
         <div className="lg:col-span-8 bg-white rounded-xl shadow-xs border border-slate-100 overflow-hidden flex flex-col justify-between">
           <div className="p-4 border-b border-slate-100 flex items-center justify-between">
-            <h3 className="text-xs font-bold text-slate-800">Recent Transactions</h3>
+            <h3 className="text-xs font-bold text-slate-800">{t.recentTransactions}</h3>
             <span className="text-[11px] text-slate-400">Click row to view / print invoice</span>
           </div>
 
@@ -413,28 +418,28 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
         <div className="lg:col-span-4 space-y-4">
           {/* Profit & Loss Summary Card matching image */}
           <div className="bg-white rounded-xl p-4 shadow-xs border border-slate-100">
-            <h3 className="text-xs font-bold text-slate-800 mb-3">Profit & Loss Summary</h3>
+            <h3 className="text-xs font-bold text-slate-800 mb-3">{t.profitAndLoss}</h3>
             <div className="space-y-2.5 text-xs">
               <div className="flex items-center justify-between text-slate-600">
-                <span>Total Sales</span>
+                <span>{t.totalSales}</span>
                 <span className="font-medium text-slate-800">
                   ₹ {totalSales.toLocaleString('en-IN')}
                 </span>
               </div>
               <div className="flex items-center justify-between text-slate-600">
-                <span>Total Purchase</span>
+                <span>{t.totalPurchase}</span>
                 <span className="font-medium text-slate-800">
                   ₹ {totalPurchase.toLocaleString('en-IN')}
                 </span>
               </div>
               <div className="flex items-center justify-between text-slate-600">
-                <span>Total Expenses</span>
+                <span>{t.expenses}</span>
                 <span className="font-medium text-slate-800">
                   ₹ {totalExpenses.toLocaleString('en-IN')}
                 </span>
               </div>
               <div className="pt-2 border-t border-slate-100 flex items-center justify-between font-bold">
-                <span className="text-[#10b981]">Net Profit</span>
+                <span className="text-[#10b981]">{t.netProfit}</span>
                 <span className="text-[#10b981] text-sm">
                   ₹ {netProfit.toLocaleString('en-IN')}
                 </span>
@@ -444,12 +449,12 @@ export const DashboardView: React.FC<DashboardViewProps> = ({
 
           {/* Stock Summary Card matching image */}
           <div className="bg-white rounded-xl p-4 shadow-xs border border-slate-100 overflow-hidden">
-            <h3 className="text-xs font-bold text-slate-800 mb-3">Stock Summary</h3>
+            <h3 className="text-xs font-bold text-slate-800 mb-3">{t.stockReport}</h3>
             <div className="overflow-x-auto -mx-4 px-4">
               <table className="w-full text-left text-xs">
                 <thead className="text-[10px] uppercase font-semibold text-slate-400 border-b border-slate-100">
                   <tr>
-                    <th className="pb-2">Product</th>
+                    <th className="pb-2">{t.products}</th>
                     <th className="pb-2 text-right">Opening</th>
                     <th className="pb-2 text-right">In</th>
                     <th className="pb-2 text-right">Out</th>
